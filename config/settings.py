@@ -32,6 +32,10 @@ ALLOWED_HOSTS = os.environ.get(
     "127.0.0.1,localhost"
 ).split(",")
 
+# Microsoft Entra ID settings
+ENTRA_TENANT_ID = os.environ.get("ENTRA_TENANT_ID", "")
+ENTRA_API_CLIENT_ID = os.environ.get("ENTRA_API_CLIENT_ID", "")
+ENTRA_REQUIRED_SCOPE = "Diary.ReadWrite"
 
 # Application definition
 
@@ -135,6 +139,9 @@ MAILERS = {
 }
 
 REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "diary.authentication.EntraIDAuthentication",
+    ],
     "DEFAULT_PERMISSION_CLASSES": [
         "rest_framework.permissions.IsAuthenticated",
     ],
